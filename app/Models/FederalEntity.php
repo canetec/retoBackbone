@@ -14,6 +14,7 @@ class FederalEntity extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'name',
         'code',
     ];

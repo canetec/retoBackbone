@@ -7,8 +7,7 @@ namespace App\Models;
 use App\Traits\BelongsToZipCodes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ZipCode extends Model
 {
@@ -18,29 +17,34 @@ class ZipCode extends Model
     protected $fillable = [
         'zip_code',
         'locality',
+        'federal_entity_id',
+        'settlement_id',
+        'municipality_id',
     ];
 
-    /**
-     * @return HasOne<FederalEntity>
-     */
-    public function federalEntity(): HasOne
+    public function resolveRouteBinding($value, $field = null)
     {
-        return $this->hasOne(FederalEntity::class);
+        return self::firstWhere('zip_code', $value);
     }
 
     /**
-     * @return HasMany<Settlement>
+     * @return BelongsTo<FederalEntity>
      */
-    public function settlements(): HasMany
+    public function federalEntity(): BelongsTo
     {
-        return $this->hasMany(Settlement::class);
+        return $this->belongsTo(FederalEntity::class);
+    }
+
+    public function settlement(): BelongsTo
+    {
+        return $this->belongsTo(Settlement::class);
     }
 
     /**
-     * @return HasOne<Municipality>
+     * @return BelongsTo<Municipality>
      */
-    public function municipality(): HasOne
+    public function municipality(): BelongsTo
     {
-        return $this->hasOne(Municipality::class);
+        return $this->belongsTo(Municipality::class);
     }
 }

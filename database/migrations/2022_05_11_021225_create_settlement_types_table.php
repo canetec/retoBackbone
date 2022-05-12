@@ -12,13 +12,9 @@ return new class() extends Migration {
      */
     public function up(): void
     {
-        Schema::create('zip_codes', function (Blueprint $table): void {
+        Schema::create('settlement_types', function (Blueprint $table): void {
             $table->id();
-            $table->string('zip_code');
-            $table->string('locality');
-            $table->foreignId('federal_entity_id')->constrained('federal_entities');
-            $table->foreignId('settlement_id')->constrained('settlements');
-            $table->foreignId('municipality_id')->constrained('municipalities');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class() extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('zip_codes');
+        Schema::dropIfExists('settlement_types');
     }
 };

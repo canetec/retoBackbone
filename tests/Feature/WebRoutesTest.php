@@ -12,6 +12,8 @@ use Tests\TestCase;
  */
 final class WebRoutesTest extends TestCase
 {
+    use \Illuminate\Foundation\Testing\DatabaseMigrations;
+
     public function testItThrowsNotFoundOnRootPath(): void
     {
         $response = $this->get('/');

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\ZipCodeController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,3 +15,5 @@ declare(strict_types=1);
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('{zipCode}', [ZipCodeController::class, 'show']);
