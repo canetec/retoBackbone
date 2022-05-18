@@ -57,7 +57,7 @@ final class ApiTest extends TestCase
      */
     public function testItRespondsAccordingToSpec(): void
     {
-        $response = $this->get('/api/01210');
+        $response = $this->get('/api/zip-codes/01210');
 
         $response->assertJson(
             [
