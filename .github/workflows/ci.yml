@@ -1,0 +1,53 @@
+name: Tooling and tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Setup PHP Version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-php-
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Analyse
+        run: ./vendor/bin/phpstan analyse --error-format github
+
+      - name: Fix PHP code style
+        run: ./vendor/bin/php-cs-fixer fix
+
+      - name: Commit changes (if any)
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply code style changes
+
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Run PHPUnit
+        run: php artisan test
