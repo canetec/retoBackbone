@@ -28,23 +28,23 @@ class ZipCodeResource extends JsonResource
             'zip_code' => $this->zip_code,
             'locality' => Str::of($this->locality)->ascii()->upper(),
             'federal_entity' => [
-                'name' => Str::of($federalEntity->name)->ascii('')->upper(),
                 'key' => $federalEntity->id,
+                'name' => Str::of($federalEntity->name)->ascii('')->upper(),
                 'code' => null,
             ],
             'settlements' => collect([$this->settlement])->map(function (Settlement $settlement) {
                 return [
                     'key' => $settlement->id,
-                    'name' => $settlement->name,
-                    'zone_type' => $settlement->zone_type,
+                    'name' => Str::upper($settlement->name),
+                    'zone_type' => Str::upper($settlement->zone_type),
                     'settlement_type' => [
                         'name' => SettlementType::find($settlement->settlement_type_id)->name,
                     ],
                 ];
             }),
             'municipality' => [
-                'name' => Str::of($this->municipality->name)->ascii()->upper(),
                 'key' => $this->municipality->id,
+                'name' => Str::of($this->municipality->name)->ascii()->upper(),
             ],
         ];
     }
