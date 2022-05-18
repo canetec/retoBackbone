@@ -28,20 +28,23 @@ class ZipCode extends Model
     }
 
     /**
-     * @return BelongsTo<FederalEntity>
+     * @return BelongsTo<FederalEntity, ZipCode>
      */
     public function federalEntity(): BelongsTo
     {
         return $this->belongsTo(FederalEntity::class);
     }
 
+    /**
+     * @return BelongsTo<Settlement, ZipCode>
+     */
     public function settlement(): BelongsTo
     {
         return $this->belongsTo(Settlement::class);
     }
 
     /**
-     * @return BelongsTo<Municipality>
+     * @return BelongsTo<Municipality, ZipCode>
      */
     public function municipality(): BelongsTo
     {

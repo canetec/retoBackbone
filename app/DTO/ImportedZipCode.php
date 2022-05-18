@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DTO;
 
-class ImportedZipCode
+final class ImportedZipCode
 {
     public function __construct(
         public readonly string $d_codigo,
@@ -25,8 +25,11 @@ class ImportedZipCode
     ) {
     }
 
-    public static function fromArray(array $array): static
+    /**
+     * @param array<string> $array
+     */
+    public static function fromArray(array $array): self
     {
-        return new static(...$array);
+        return new self(...$array);
     }
 }

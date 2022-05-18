@@ -30,6 +30,9 @@ class Settlement extends Model
         return $this->belongsToMany(ZipCode::class);
     }
 
+    /**
+     * @return HasOne<SettlementType>
+     */
     public function type(): HasOne
     {
         return $this->hasOne(SettlementType::class);

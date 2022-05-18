@@ -16,6 +16,9 @@ class SettlementType extends Model
         'name',
     ];
 
+    /**
+     * @return BelongsToMany<Settlement>
+     */
     public function settlements(): BelongsToMany
     {
         return $this->belongsToMany(Settlement::class);

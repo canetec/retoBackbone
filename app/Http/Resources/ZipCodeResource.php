@@ -13,14 +13,14 @@ use Illuminate\Support\Str;
 /** @mixin \App\Models\ZipCode */
 class ZipCodeResource extends JsonResource
 {
-    public static $wrap = false;
+    public static $wrap;
 
     /**
      * @param Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $federalEntity = $this->federalEntity;
 
